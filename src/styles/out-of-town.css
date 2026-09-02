@@ -1,0 +1,42 @@
+/* Out-of-town page. Steps, the pull quote and the page head are shared —
+   this is the delivery price table and the surrounding copy. */
+
+.oot-intro{background:var(--paper)}
+/* four steps here, not the homepage's three — a 3-up grid orphans the last one */
+.oot-intro .steps{margin-top:0;grid-template-columns:repeat(4,1fr)}
+.oot-intro .step .n{margin-bottom:40px}
+@media(max-width:1000px){.oot-intro .steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.oot-intro .steps{grid-template-columns:1fr}}
+
+/* What it costs to get the car to you */
+.delivery{background:var(--white)}
+.delivery-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(32px,5vw,72px);align-items:start}
+.delivery-grid h2{max-width:14ch}
+.delivery-grid p{color:var(--ink-2);font-size:18px;margin-top:20px}
+.eta{margin-top:28px;background:var(--blue-tint);border-radius:var(--r-m);padding:22px 24px}
+.eta b{display:block;font-family:var(--sora);font-size:clamp(24px,2.6vw,30px);font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.eta span{display:block;font-size:15px;color:var(--ink-2);margin-top:6px}
+
+.rates{width:100%;border-collapse:collapse;font-size:16px}
+.rates caption{text-align:left;font-weight:600;font-size:15px;color:var(--ink-2);padding-bottom:12px}
+.rates th{text-align:left;font-weight:600;font-size:13px;color:var(--mute);text-transform:none;padding:0 0 10px;border-bottom:1px solid var(--line)}
+.rates th:last-child,.rates td:last-child{text-align:right}
+.rates td{padding:13px 0;border-bottom:1px solid var(--line)}
+.rates td:last-child{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rates tr:last-child td{border-bottom:0}
+@media(max-width:900px){.delivery-grid{grid-template-columns:1fr}}
+@media(max-width:420px){.rates{font-size:15px}}
+
+/* Reassurance before the quote */
+.oot-check{background:var(--paper)}
+.oot-check .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:start}
+.oot-check h2{max-width:15ch}
+.oot-check p{color:var(--ink-2);font-size:18px;margin-top:20px}
+.oot-list{list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:8px}
+.oot-list li{display:flex;gap:12px;align-items:flex-start;font-size:17px;color:var(--ink-2)}
+.oot-list svg{width:22px;height:22px;flex:none;color:var(--blue);margin-top:2px}
+@media(max-width:900px){.oot-check .wrap{grid-template-columns:1fr}}
+
+/* the page reads left aligned throughout, so the closing action does too */
+.oot-close .grid-more{text-align:left}
+.oot-close .fine{text-align:left;max-width:52ch}

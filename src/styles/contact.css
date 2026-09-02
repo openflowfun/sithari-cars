@@ -1,0 +1,41 @@
+/* Contact page. Page head, hours table, map and trust row come from
+   components.css — this is the two-branch layout and the people list. */
+
+/* Ways to reach us, before the detail */
+.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.way{background:#fff;border:1px solid var(--line);border-radius:var(--r-m);padding:26px;display:flex;flex-direction:column;gap:8px;transition:border-color .25s,transform .35s var(--ease),box-shadow .35s}
+a.way:hover{border-color:var(--ink);transform:translateY(-3px);box-shadow:0 20px 40px -24px rgba(27,36,48,.35)}
+.way svg{width:26px;height:26px;color:var(--blue);margin-bottom:6px}
+.way b{font-family:var(--sora);font-weight:600;font-size:20px;letter-spacing:-.01em}
+.way span{font-size:15px;color:var(--ink-2)}
+@media(max-width:820px){.ways{grid-template-columns:1fr}}
+
+/* One panel per branch */
+.branches{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,40px)}
+.branch{background:#fff;border:1px solid var(--line);border-radius:var(--r-l);padding:clamp(24px,3vw,32px)}
+.branch .tag{display:inline-block;font-size:13px;font-weight:600;color:var(--blue);background:var(--blue-tint);border-radius:999px;padding:5px 12px;margin-bottom:16px}
+.branch h3{font-size:clamp(20px,2vw,24px)}
+.branch .addr{margin-top:12px;font-size:17px;color:var(--ink-2)}
+.branch .tel{display:inline-flex;align-items:center;gap:9px;margin-top:14px;font-family:var(--sora);font-weight:600;font-size:20px;letter-spacing:-.01em}
+.branch .tel svg{width:18px;height:18px;color:var(--blue)}
+.branch .hours{margin-top:22px}
+.branch .note{font-size:13px;color:var(--mute);margin-top:14px}
+.branch .btn{margin-top:22px}
+@media(max-width:820px){.branches{grid-template-columns:1fr}}
+
+/* Who you will be dealing with */
+.people{background:var(--white)}
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px}
+.person{border:1px solid var(--line);border-radius:var(--r-m);padding:22px;display:flex;flex-direction:column;gap:4px}
+.person .av{width:44px;height:44px;border-radius:50%;background:var(--blue-tint);color:var(--blue);display:grid;place-items:center;font-family:var(--sora);font-weight:600;font-size:17px;margin-bottom:12px}
+.person b{font-weight:600;font-size:17px}
+.person .role{font-size:14px;color:var(--ink-2)}
+.person a{margin-top:8px;font-weight:600;color:var(--blue);font-size:16px}
+.person a:hover{text-decoration:underline}
+@media(max-width:1000px){.team{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.team{grid-template-columns:1fr}}
+
+/* Map sits full width under the branches */
+.contact-map{margin-top:clamp(32px,4vw,48px)}
+.contact-map .map{position:static;aspect-ratio:21/7}
+@media(max-width:820px){.contact-map .map{aspect-ratio:4/3}}

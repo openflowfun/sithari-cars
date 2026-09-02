@@ -1,0 +1,22 @@
+/* Reset, document defaults, typographic scale and the shared reveal primitive. */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto;-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{font-family:var(--fig);color:var(--ink);background:var(--paper);line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+[hidden]{display:none!important}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+h1,h2,h3{font-family:var(--sora);font-weight:600;letter-spacing:-.02em;line-height:1.1}
+h2{font-size:clamp(30px,4vw,46px);max-width:18ch}
+h3{font-size:clamp(20px,2vw,24px);letter-spacing:-.01em}
+p{max-width:62ch}
+.wrap{width:min(var(--max),100% - 2*var(--gut));margin-inline:auto}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* Reveal (used once per section, orchestrated) */
+.rv{opacity:0;transform:translateY(24px)}
+.no-js .rv,.rm .rv{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}*{transition-duration:.01ms!important;animation:none!important}}
