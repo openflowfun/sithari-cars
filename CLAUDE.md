@@ -5,6 +5,7 @@ Client: Sithari Cars Limited, used-car dealer, 24 Bruce McLaren Rd, Henderson, A
 Old site: https://www.sitharicars.co.nz (Motorcentral platform). Inventory currently comes from it — see `scripts/scrape_inventory.py`. Eventually replace with a Motorcentral feed or CMS.
 
 ## Status
+- Live preview: https://openflowfun.github.io/sithari-cars/ (GitHub Pages, rebuilt on every push to `main`).
 - Vite multi-page build. `npm run dev` / `npm run build`. Pages are plain `.html` files in `src/`, one Rollup input each in `vite.config.js`.
 - Shared CSS in `src/styles/` (tokens → base → components), shared JS in `src/scripts/` (`motion.js`, `cards.js`, `nav.js`). Page-only CSS/JS sits alongside as `home.*` / `vehicles.*`.
 - `src/index.html` — homepage v1, done and reviewed. Refactored onto the shared files; renders byte-identically to the original single-file version. Treat it as the reference for every other page.

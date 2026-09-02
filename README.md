@@ -1,5 +1,9 @@
 # Sithari Cars website
 
+**Live preview:** https://openflowfun.github.io/sithari-cars/
+Published from `main` by `.github/workflows/deploy.yml` on every push.
+
+
 Open in Claude Code from this folder. `CLAUDE.md` carries the brand, design system and rules.
 
 Vite multi-page site. `npm install`, then `npm run dev` (dev server) or `npm run build && npm run preview` (production build). The pages need a server — opening the HTML from disk will not run the module scripts.
