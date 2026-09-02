@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://openflowfun.github.io/sithari-cars/sitemap.xml

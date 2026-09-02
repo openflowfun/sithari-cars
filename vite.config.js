@@ -8,7 +8,8 @@ const root = resolve(import.meta.dirname, 'src');
 
 export default defineConfig({
   root,
-  publicDir: false,
+  /* favicons, og-image, robots and sitemap are copied verbatim to the dist root */
+  publicDir: resolve(root, 'public'),
   /* relative, so the build runs from a domain root or a subfolder alike */
   base: './',
   build: {

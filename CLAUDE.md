@@ -6,6 +6,7 @@ Old site: https://www.sitharicars.co.nz (Motorcentral platform). Inventory curre
 
 ## Status
 - Live preview: https://openflowfun.github.io/sithari-cars/ (GitHub Pages, rebuilt on every push to `main`).
+- Moving to the real domain: `og:url`, `og:image` and `<link rel=canonical>` in each `src/*.html`, plus `src/public/sitemap.xml` and `robots.txt`, carry that absolute URL. `grep -rn openflowfun.github.io src/` finds them all.
 - Vite multi-page build. `npm run dev` / `npm run build`. Pages are plain `.html` files in `src/`, one Rollup input each in `vite.config.js`.
 - Shared CSS in `src/styles/` (tokens → base → components), shared JS in `src/scripts/` (`motion.js`, `cards.js`, `nav.js`). Page-only CSS/JS sits alongside as `home.*` / `vehicles.*`.
 - `src/index.html` — homepage v1, done and reviewed. Refactored onto the shared files; renders byte-identically to the original single-file version. Treat it as the reference for every other page.
