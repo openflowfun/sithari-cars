@@ -19,9 +19,11 @@ Old site: https://www.sitharicars.co.nz (Motorcentral platform). Inventory curre
 Colours
 - navy `#0F1E33` (hero, footer, dark surfaces), navy-2 `#16294A` (cards on navy)
 - paper `#F7F6F3` page background, white `#FFFFFF` content surfaces
-- ink `#1B2430` text, ink-2 `#4A5563` secondary, mute `#8A94A6` tertiary, line `#E4E2DC`
-- orange `#DF542F` — CTAs and focus rings ONLY. Never for large fills or headings.
-- blue `#286AA6` — finance, trust, links, icons. tint `#EAF1F8`.
+- ink `#1B2430` text, ink-2 `#4A5563` secondary, mute `#656F80` tertiary, line `#E4E2DC`
+- orange `#DF542F` — focus rings and large display marks only (3:1 non-text). Never for large fills or headings.
+- orange-2 `#C7472A` — anything carrying small text: button fills, `.step .n`, the star rating. 4.81:1 on white. orange-3 `#A63619` is its hover.
+- blue `#286AA6` — finance, trust, links, icons. tint `#EAF1F8`. White text on blue needs alpha ≥ .85.
+- **Every text/background pair must clear WCAG AA** (4.5:1, or 3:1 at ≥24px / ≥18.66px bold). `npm test` enforces this on all pages — see section 6 of `tests/quality.mjs`. mute was `#8A94A6` and orange fills were `#DF542F` until they were measured at 2.83:1 and 3.86:1.
 Type
 - Sora 600 for all headings, tracking -0.02em to -0.035em. Figtree 400/500/600 for body/UI.
 - Headings are plain sentences in sentence case. No all-caps eyebrows, no single-word colour accents.

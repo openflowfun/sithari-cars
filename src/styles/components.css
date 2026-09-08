@@ -5,8 +5,8 @@
 .btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;font-weight:600;font-size:16px;transition:transform .25s var(--ease),background .2s,color .2s,box-shadow .25s}
 .btn:hover{transform:translateY(-1px)}
 .btn:active{transform:translateY(0)}
-.btn-orange{background:var(--orange);color:#fff;box-shadow:0 8px 24px -12px rgba(223,84,47,.7)}
-.btn-orange:hover{background:var(--orange-2)}
+.btn-orange{background:var(--orange-2);color:#fff;box-shadow:0 8px 24px -12px rgba(199,71,42,.7)}
+.btn-orange:hover{background:var(--orange-3)}
 .btn-ghost{color:#fff;border:1.5px solid rgba(255,255,255,.28)}
 .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.06)}
 .btn-ink{background:var(--ink);color:#fff}
@@ -130,7 +130,7 @@
 .fin::after{content:"";position:absolute;right:-10%;top:-30%;width:60%;aspect-ratio:1;border-radius:50%;border:120px solid rgba(255,255,255,.05);pointer-events:none}
 .fin .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,5vw,80px);align-items:center;position:relative}
 .fin h2{max-width:16ch}
-.fin p{color:rgba(255,255,255,.8);font-size:18px;margin-top:20px}
+.fin p{color:rgba(255,255,255,.9);font-size:18px;margin-top:20px}
 .fin-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
 .fin-card{background:#fff;color:var(--ink);border-radius:var(--r-l);padding:28px;box-shadow:0 40px 80px -30px rgba(0,0,0,.4)}
 .fin-card h3{margin-bottom:6px}
@@ -149,7 +149,7 @@ input[type=range]{width:100%;accent-color:var(--blue);height:32px}
 /* Process steps + pull quote */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px}
 .step{background:#fff;border:1px solid var(--line);border-radius:var(--r-l);padding:28px;position:relative}
-.step .n{font-family:var(--sora);font-size:14px;font-weight:600;color:var(--orange);margin-bottom:56px}
+.step .n{font-family:var(--sora);font-size:14px;font-weight:600;color:var(--orange-2);margin-bottom:56px}
 .step h3{margin-bottom:10px}
 .step p{color:var(--ink-2);font-size:16px}
 .step::after{content:"";position:absolute;top:28px;right:28px;width:36px;height:36px;border-radius:50%;background:var(--paper)}

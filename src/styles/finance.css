@@ -51,4 +51,5 @@
 /* Closing call to action — the homepage's blue band, single column */
 .fin-cta .wrap{grid-template-columns:1fr;justify-items:start}
 .fin-cta h2{max-width:18ch}
-.fine-print{margin-top:28px;font-size:13px;color:rgba(255,255,255,.78);max-width:64ch}
+/* `.fin p` is (0,1,1) and would otherwise win on both size and colour */
+.fin .fine-print{margin-top:28px;font-size:13px;color:rgba(255,255,255,.9);max-width:64ch}

@@ -2,8 +2,12 @@
    Values come straight from CLAUDE.md; nothing here should be overridden per page. */
 :root{
   --navy:#0F1E33; --navy-2:#16294A; --paper:#F7F6F3; --white:#FFFFFF;
-  --ink:#1B2430; --ink-2:#4A5563; --mute:#8A94A6; --line:#E4E2DC; --line-dark:rgba(255,255,255,.12);
-  --orange:#DF542F; --orange-2:#C7472A; --blue:#286AA6; --blue-2:#1F5A8F; --blue-tint:#EAF1F8;
+  --ink:#1B2430; --ink-2:#4A5563; --mute:#656F80; --line:#E4E2DC; --line-dark:rgba(255,255,255,.12);
+  /* --orange is the brand accent: focus rings and large display marks, where 3:1
+     non-text contrast applies. Anything carrying small text uses --orange-2,
+     which clears 4.5:1 against white; --orange-3 is its hover. */
+  --orange:#DF542F; --orange-2:#C7472A; --orange-3:#A63619;
+  --blue:#286AA6; --blue-2:#1F5A8F; --blue-tint:#EAF1F8;
   --sora:'Sora',system-ui,sans-serif; --fig:'Figtree',system-ui,sans-serif;
   --max:1240px; --gut:clamp(20px,4vw,48px);
   --r-s:10px; --r-m:16px; --r-l:24px;

@@ -16,6 +16,7 @@ const PALETTE = [
   'rgb(223, 84, 47)', 'rgb(199, 71, 42)', 'rgb(40, 106, 166)', 'rgb(31, 90, 143)',
   'rgb(234, 241, 248)', 'rgb(0, 0, 0)', 'rgba(0, 0, 0, 0)',
   'rgb(230, 228, 222)', 'rgb(242, 246, 250)', 'rgb(238, 238, 238)', 'rgb(11, 23, 40)',
+  'rgb(101, 111, 128)', 'rgb(166, 54, 25)',
 ];
 /* 12px is the .field select / .burger radius inherited from the reviewed homepage. */
 const RADII = ['0px', '10px', '12px', '16px', '24px', '24px 24px 0px 0px', '50%', '999px'];
@@ -142,6 +143,54 @@ export default async function quality({ browser, base, check }) {
       return { tag: document.activeElement.tagName, outlined: getComputedStyle(el).outlineStyle !== 'none' };
     });
     check('focused control keeps a visible ring', [focus.tag, focus.outlined], ['INPUT', true]);
+    await p.close();
+  }
+
+  /* --- 6. WCAG AA contrast on real rendered text --- */
+  for (const path of PAGES) {
+    const p = await browser.newPage();
+    await p.setViewport({ width: 1440, height: 900 });
+    await p.goto(base + path, { waitUntil: 'networkidle2' });
+    await settle(700);
+    const failures = await p.evaluate(() => {
+      const lum = c => {
+        const [r, g, b] = c.map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      };
+      const parse = s => (s.match(/[\d.]+/g) || []).map(Number);
+      /* walk up for the first ancestor that actually paints a background */
+      const bgOf = el => {
+        for (let e = el; e; e = e.parentElement) {
+          const p = parse(getComputedStyle(e).backgroundColor);
+          if (p.length >= 3 && (p[3] === undefined || p[3] > 0.5)) return p.slice(0, 3);
+        }
+        return [255, 255, 255];
+      };
+      const flatten = (fg, bg) => { const a = fg[3] === undefined ? 1 : fg[3]; return [0, 1, 2].map(i => fg[i] * a + bg[i] * (1 - a)); };
+
+      const out = [];
+      document.querySelectorAll('body *').forEach(el => {
+        /* the fixed header is transparent over a dark band and opaque over paper;
+           both states are designed, and neither is measurable from the DOM alone */
+        if (el.closest('#nav, .drawer')) return;
+        if (![...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) return;
+        const cs = getComputedStyle(el);
+        if (cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity === 0) return;
+        const bg = bgOf(el);
+        const r = (() => {
+          const L1 = lum(flatten(parse(cs.color), bg)), L2 = lum(bg);
+          return (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05);
+        })();
+        const size = parseFloat(cs.fontSize);
+        const large = size >= 24 || (size >= 18.66 && +cs.fontWeight >= 700);
+        const need = large ? 3 : 4.5;
+        if (r < need - 0.01) {
+          out.push(`${el.tagName}.${el.className.toString().slice(0, 22)} ${cs.fontSize} ${r.toFixed(2)}:1 <${need}`);
+        }
+      });
+      return [...new Set(out)];
+    });
+    check(`${path}: text meets WCAG AA contrast`, failures, []);
     await p.close();
   }
 
