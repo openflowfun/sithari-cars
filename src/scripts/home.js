@@ -81,6 +81,19 @@ document.getElementById('search').addEventListener('submit', e => {
   location.href = e.target.action + (p.toString() ? '?' + p : '');
 });
 
+/* Explainer video: click to play. It has narration, so it never autoplays and
+   the native controls only appear once the visitor has opted in. */
+const vid = document.getElementById('explainer');
+const vidPlay = document.getElementById('vid-play');
+if (vid && vidPlay) {
+  vidPlay.addEventListener('click', () => {
+    vid.controls = true;
+    vid.play();
+    vid.closest('.vid').classList.add('is-playing');
+    vid.focus();
+  });
+}
+
 /* Mobile nav */
 initNav();
 

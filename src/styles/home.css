@@ -59,6 +59,22 @@
 .why-sticky .sam .av{width:48px;height:48px;border-radius:50%;background:var(--orange-2);color:#fff;display:grid;place-items:center;font-family:var(--sora);font-weight:600}
 .why-sticky .sam b{display:block;font-weight:600}
 .why-sticky .sam span{font-size:14px;color:var(--ink-2)}
+/* Explainer video — sits in the sticky column, below the owners' credit.
+   Click to play: it carries narration, so it must never autoplay. */
+.vid{margin-top:32px}
+.vid-frame{position:relative;border-radius:var(--r-m);overflow:hidden;background:var(--navy);aspect-ratio:16/9}
+.vid-frame video{width:100%;height:100%;display:block;object-fit:cover}
+.vid-play{position:absolute;inset:0;width:100%;display:grid;place-items:center;background:rgba(15,30,51,.32);transition:background .25s var(--ease)}
+.vid-play:hover{background:rgba(15,30,51,.18)}
+.vid-play i{width:66px;height:66px;border-radius:50%;background:var(--orange-2);display:grid;place-items:center;
+  box-shadow:0 12px 32px -10px rgba(15,30,51,.6);transition:transform .25s var(--ease)}
+.vid-play:hover i{transform:scale(1.06)}
+.vid-play svg{width:24px;height:24px;color:#fff;margin-left:4px}
+.vid.is-playing .vid-play{display:none}
+.vid figcaption{margin-top:12px;font-size:14px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.vid .lang{font-weight:600;color:var(--ink)}
+.vid .dot{color:var(--mute)}
+
 .why-list{display:flex;flex-direction:column}
 .why-item{padding:36px 0;border-top:1px solid var(--line)}
 .why-item:last-child{border-bottom:1px solid var(--line)}
@@ -66,6 +82,9 @@
 .why-item h3 svg{width:28px;height:28px;color:var(--blue);flex:none}
 .why-item p{margin-top:12px;color:var(--ink-2);padding-left:44px}
 @media(max-width:900px){.why .wrap{grid-template-columns:1fr}.why-sticky{position:static}}
+/* with the video the column is taller than a short laptop viewport, and a
+   sticky block taller than the screen strands its own bottom off-screen */
+@media(max-height:900px){.why-sticky{position:static}}
 
 /* Out of town */
 .oot{background:var(--paper)}

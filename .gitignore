@@ -3,3 +3,12 @@ dist
 .DS_Store
 *.log
 .claude/settings.local.json
+
+# Video masters stay local — only the web encodes and poster are committed.
+# The raw export is 129 MB; GitHub hard-rejects anything over 100 MB.
+src/public/video/*
+!src/public/video/README.md
+!src/public/video/sithari-explainer.mp4
+!src/public/video/sithari-explainer.webm
+!src/public/video/sithari-explainer-poster.jpg
+!src/public/video/*.vtt

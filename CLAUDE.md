@@ -13,6 +13,9 @@ Old site: https://www.sitharicars.co.nz (Motorcentral platform). Inventory curre
 - `src/vehicles.html` — listing page, built, **awaiting review**. Filters, sort, live count, URL params, mobile bottom sheet.
 - Next: vehicle detail (`/vehicle/:id`), finance, out-of-town, contact.
 - `npm test` drives both pages in headless Chrome and enforces the rules below (palette, type, radii, 360px, reduced motion, CDN-less fallback, a11y). Add new pages to `PAGES` in `tests/quality.mjs`.
+- Homepage carries a 1m14 Sinhala explainer video in the `.why` sticky column. The 129 MB master lives in `src/public/video/` and is gitignored; only the 720p web encode ships. Re-encode with:
+  `ffmpeg -i <master> -vf scale=1280:-2 -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart sithari-explainer.mp4`
+- **Outstanding: English subtitles for that video** (WCAG 1.2.2 Level A). The `<track>` element is scaffolded and commented out in `src/index.html` — drop a `sithari-explainer.en.vtt` beside the mp4 and uncomment it. Needs a translation of the Sinhala narration.
 - Body style is derived from the model name in `cards.js` (`BODY_RULES`) because the scrape has no such field. Delete it once the inventory comes from a Motorcentral feed.
 
 ## Design system (do not drift from this)

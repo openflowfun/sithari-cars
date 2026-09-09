@@ -175,6 +175,7 @@ export default async function quality({ browser, base, check }) {
         if (el.closest('#nav, .drawer')) return;
         if (![...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) return;
         const cs = getComputedStyle(el);
+        if (!cs.color) return;   /* non-rendered subtree, e.g. inside <video> */
         if (cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity === 0) return;
         const bg = bgOf(el);
         const r = (() => {
@@ -205,6 +206,9 @@ export default async function quality({ browser, base, check }) {
       const strays = new Set(), fonts = new Set(), oddRadii = new Set();
       document.querySelectorAll('main *, .nav *, .site-foot *, .filters *').forEach(el => {
         const cs = getComputedStyle(el);
+        /* elements in a non-rendered subtree — <source> and the fallback markup
+           inside <video> — compute to empty strings, so there is nothing to audit */
+        if (!cs.color) return;
         /* form controls carry UA-default colour and font that never paint — a
            range input renders through accent-color, an option through the OS */
         if (!/^(INPUT|OPTION)$/.test(el.tagName)) {
