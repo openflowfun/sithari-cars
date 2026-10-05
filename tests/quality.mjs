@@ -2,7 +2,7 @@
    responsive to 360px, degrades without the CDN, respects reduced motion,
    semantic + labelled, and never drifts off the palette or type scale. */
 
-import { settle } from './helpers.mjs';
+import { settle, decodePNG, contrast } from './helpers.mjs';
 import { count } from './data.mjs';
 
 const WIDTHS = [360, 390, 768, 1024, 1440];
@@ -193,6 +193,68 @@ export default async function quality({ browser, base, check }) {
       return [...new Set(out)];
     });
     check(`${path}: text meets WCAG AA contrast`, failures, []);
+    await p.close();
+  }
+
+  /* --- 7. hero copy over the yard photo ---
+     Section 6 reads background-color, which is blind to an image. Here the text
+     is recorded, hidden, and the page photographed, so every block is measured
+     against the brightest pixel actually behind it — a strict worst case.
+     Checked across the desktop range: the narrower the screen, the further the
+     copy reaches into the lighter right-hand side of the tint. */
+  for (const w of [920, 1024, 1280, 1440, 1920]) {
+    const p = await browser.newPage();
+    await p.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+    await p.setViewport({ width: w, height: 1400 });
+    await p.goto(base + '/index.html', { waitUntil: 'networkidle2' });
+    await settle(600);
+    const { boxes, photo } = await p.evaluate(() => ({
+      /* without the photo this would pass against plain navy and prove nothing */
+      photo: performance.getEntriesByType('resource').some(e => /yard-aerial/.test(e.name)),
+      boxes: [...document.querySelectorAll('.hero *')]
+        .filter(el => !el.closest('.search, .strip-card, .btn-orange'))   /* those carry their own fill */
+        .filter(el => [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()))
+        .map(el => {
+          const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+          return { label: el.textContent.trim().slice(0, 28), color: cs.color, size: parseFloat(cs.fontSize),
+                   weight: +cs.fontWeight, x: Math.max(0, Math.floor(r.x)), y: Math.max(0, Math.floor(r.y)),
+                   w: Math.ceil(r.width), h: Math.ceil(r.height) };
+        })
+        .filter(b => b.w && b.h),
+    }));
+    /* hide the decoration too: a link's own underline is not the background its
+       text sits on, and left in, it was being measured as one */
+    await p.addStyleTag({ content: '.hero *{color:transparent!important;border-color:transparent!important;text-decoration-color:transparent!important;box-shadow:none!important}.hero .btn,.hero .search,.hero .strip-card{visibility:hidden!important}' });
+    await settle(200);
+    const img = decodePNG(await p.screenshot({ type: 'png' }));
+    const failures = [];
+    for (const b of boxes) {
+      let worst = null, worstL = -1;
+      for (let y = b.y; y < Math.min(img.height, b.y + b.h); y++) {
+        for (let x = b.x; x < Math.min(img.width, b.x + b.w); x++) {
+          const px = img.at(x, y), L = px[0] * 0.2126 + px[1] * 0.7152 + px[2] * 0.0722;
+          if (L > worstL) { worstL = L; worst = px; }
+        }
+      }
+      if (!worst) continue;
+      const [r, g, bl, a = 1] = (b.color.match(/[\d.]+/g) || []).map(Number);
+      const text = [r, g, bl].map((c, i) => c * a + worst[i] * (1 - a));   /* translucent copy */
+      const ratio = contrast(text, worst);
+      const need = b.size >= 24 || (b.size >= 18.66 && b.weight >= 700) ? 3 : 4.5;
+      if (ratio < need) failures.push(`${b.label} ${ratio.toFixed(2)}:1 <${need}`);
+    }
+    check(`hero copy over the yard photo @${w}px clears AA`, [photo, boxes.length > 5, failures], [true, true, []]);
+    await p.close();
+  }
+
+  /* and phones never download it */
+  {
+    const p = await browser.newPage();
+    await p.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
+    await p.goto(base + '/index.html', { waitUntil: 'networkidle2' });
+    await settle(600);
+    const fetched = await p.evaluate(() => performance.getEntriesByType('resource').some(e => /yard-aerial/.test(e.name)));
+    check('phones keep plain navy and never fetch the hero photo', fetched, false);
     await p.close();
   }
 

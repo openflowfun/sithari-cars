@@ -6,6 +6,26 @@
   radial-gradient(900px 500px at 85% -10%,rgba(40,106,166,.35),transparent 60%),
   radial-gradient(700px 400px at -10% 100%,rgba(223,84,47,.18),transparent 60%);pointer-events:none}
 .hero .wrap{position:relative}
+/* Their own yard behind the hero: the 6.5s drone frame from the explainer,
+   cropped clear of the burned-in badges (CLAUDE.md has the commands). The tint
+   carries the contrast — near-solid navy under the copy, easing off on the right
+   where the white search card has its own ground, back to solid navy under the
+   stock strip — and tests/quality.mjs measures it against the photo's pixels.
+   Phones keep plain navy: the copy runs edge to edge there, the tint would have
+   to be so heavy the photo barely showed, and it isn't worth the download. */
+@media(min-width:901px){
+  .hero{
+    --tint:
+      linear-gradient(90deg,rgba(15,30,51,.93) 0%,rgba(15,30,51,.84) 42%,rgba(15,30,51,.58) 100%),
+      linear-gradient(180deg,rgba(15,30,51,.3) 0%,rgba(15,30,51,0) 26%,rgba(15,30,51,.86) 74%,var(--navy) 92%);
+    /* the second declaration wins wherever image-set() with type() is understood */
+    background-image:var(--tint),url('../assets/hero/yard-aerial.jpg');
+    background-image:var(--tint),image-set(url('../assets/hero/yard-aerial.avif') type('image/avif'),url('../assets/hero/yard-aerial.jpg') type('image/jpeg'));
+    background-position:0 0,0 0,50% 50%;
+    background-size:auto,auto,cover;
+    background-repeat:no-repeat;
+  }
+}
 .hero-top{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,5vw,80px);align-items:end}
 .hero h1{font-size:clamp(38px,5.4vw,68px);font-weight:600;letter-spacing:-.035em;line-height:1.02;max-width:12ch}
 .hero-lead{margin-top:24px;font-size:clamp(17px,1.4vw,20px);color:rgba(255,255,255,.72);max-width:44ch}

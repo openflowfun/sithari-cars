@@ -15,6 +15,13 @@ Old site: https://www.sitharicars.co.nz (Motorcentral platform). Inventory curre
 - `npm test` drives all five pages in headless Chrome and enforces the rules below (palette, type, radii, 360px, reduced motion, CDN-less fallback, a11y). Add new pages to `PAGES` in `tests/quality.mjs`.
 - Homepage carries a 1m14 Sinhala explainer video in the `.why` sticky column. The 129 MB master lives in `src/public/video/` and is gitignored; only the 720p web encode ships. Re-encode with:
   `ffmpeg -i <master> -vf scale=1280:-2 -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart sithari-explainer.mp4`
+- **Hero background (desktop ≥901px only):** an aerial of the yard — the 6.5s frame of the explainer master, cropped clear of the burned-in BuyerScore/MTA badges (they start at x=1474). Rebuild it with:
+  ```
+  ffmpeg -ss 6.5 -i "src/public/video/Video-Sithari Cars Sinhala.mp4" -frames:v 1 -vf crop=1456:1080:0:0 /tmp/yard.png
+  ffmpeg -i /tmp/yard.png -c:v libsvtav1 -crf 40 -preset 4 -pix_fmt yuv420p -frames:v 1 src/assets/hero/yard-aerial.avif   # 88 KB
+  ffmpeg -i /tmp/yard.png -q:v 12 src/assets/hero/yard-aerial.jpg                                                           # fallback
+  ```
+  The navy tint in `home.css` carries the contrast; `tests/quality.mjs` §7 measures every hero text block against the brightest photo pixel behind it at 920–1920px, and checks phones never fetch the image. It is a still, not a motion effect. **Outstanding: ask the client for a clean frame from the raw drone footage** (no badges) and re-run the encode — no CSS change needed.
 - **Outstanding: English subtitles for that video** (WCAG 1.2.2 Level A). The `<track>` element is scaffolded and commented out in `src/index.html` — drop a `sithari-explainer.en.vtt` beside the mp4 and uncomment it. Needs a translation of the Sinhala narration.
 - **Inventory: 263 cars, scraped 5 Oct 2026.** Stock turns over fast — between 1 Sept and 5 Oct, 49% of the cars shown had sold. Refresh is manual for now:
   ```
