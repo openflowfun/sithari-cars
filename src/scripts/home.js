@@ -3,7 +3,7 @@
 
 import featuredData from '../data/featured.json';
 import marqueeData from '../data/marquee.json';
-import { money, normalise, carHTML } from './cards.js';
+import { money, normalise, carHTML, CHIPS } from './cards.js';
 import { initCalculator } from './calculator.js';
 import { renderHours } from './hours.js';
 import { initNav, initNavState } from './nav.js';
@@ -42,13 +42,8 @@ document.getElementById('types').innerHTML = TYPES.map(([n, v, d]) =>
 
 /* Featured grid + filters */
 const grid = document.getElementById('grid');
-const filt = {
-  all: () => true,
-  hybrid: c => c.fuel === 'Hybrid' || c.fuel === 'Electric',
-  suv: c => /RAV4|Q7|X4|CX-5|C-HR|VEZEL|X-trail|XV|Kicks/i.test(c.model + c.make) || c.tags.includes('4WD'),
-  family: c => c.tags.some(t => /seater/i.test(t)) || /Serena|Odyssey|Alpha|Noah|VELLFIRE|Elgrand/i.test(c.model),
-  under15: c => c.price && c.price < 15000,
-};
+/* was a second, hand-kept model list that knew nothing of the Macan or the CX-3 */
+const filt = CHIPS;
 function render(f) {
   const list = FEATURED.filter(filt[f]).slice(0, 8);
   grid.innerHTML = list.length

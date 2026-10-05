@@ -3,6 +3,7 @@
    properties — an attribute like `hidden` can be silently overridden by CSS. */
 
 import { settle } from './helpers.mjs';
+import { N, PAGE, count, countCopy, EXTREMES, RARE_FUEL, noun } from './data.mjs';
 
 export default async function listing({ browser, base, check }) {
   const URL_ = base + '/vehicles.html';
@@ -26,18 +27,24 @@ export default async function listing({ browser, base, check }) {
   }));
   const go = async q => { await page.goto(URL_ + q, { waitUntil: 'networkidle2' }); await settle(400); };
 
+  const SUV = count(c => c.body === 'SUV / 4x4');
+  const showing = n => Math.min(n, PAGE);
+
   /* --- default view --- */
   await go('');
   let s = await snap();
-  check('default: 24 of 138 shown', [s.cards, s.more, s.url], [24, true, '']);
-  check('default: count copy', s.count, '138 cars in stock showing 24');
+  check(`default: ${PAGE} of ${N} shown`, [s.cards, s.more, s.url], [showing(N), N > PAGE, '']);
+  check('default: count copy', s.count, countCopy(N));
 
   /* --- paging --- */
   await page.click('#more'); await settle(250);
-  check('show more -> 48', (await snap()).cards, 48);
-  for (let i = 0; i < 4; i++) { await page.click('#more').catch(() => {}); await settle(200); }
+  check('show more adds a page', (await snap()).cards, Math.min(N, PAGE * 2));
+  for (let i = 0; i < Math.ceil(N / PAGE) + 1; i++) {
+    if (!(await snap()).more) break;
+    await page.click('#more'); await settle(200);
+  }
   s = await snap();
-  check('paged to the end -> 138 cards, button gone', [s.cards, s.more], [138, false]);
+  check(`paged to the end -> all ${N} cards, button gone`, [s.cards, s.more], [N, false]);
 
   /* --- ticking a facet --- */
   await go('');
@@ -45,24 +52,26 @@ export default async function listing({ browser, base, check }) {
   await settle(300);
   s = await snap();
   check('facet body=SUV: url is shareable', s.url, '?body=SUV+%2F+4x4');
-  check('facet body=SUV: 28 matches', [s.count, s.cards], ['28 cars match of 138 in stock, showing 24', 24]);
+  check(`facet body=SUV: ${SUV} matches`, [s.count, s.cards], [countCopy(SUV), showing(SUV)]);
   check('facet body=SUV: chip shown', s.chips, ['SUV / 4x4']);
 
   await go('?body=SUV+%2F+4x4');
-  check('shared url restores state', (await snap()).count, '28 cars match of 138 in stock, showing 24');
+  check('shared url restores state', (await snap()).count, countCopy(SUV));
 
   /* --- counts are cross-filtered --- */
   const sum = key => page.evaluate(k =>
     [...document.querySelectorAll(`input[data-facet="${k}"]`)]
       .reduce((t, i) => t + Number(i.closest('.opt').querySelector('b').textContent), 0), key);
-  check('fuel counts within SUV sum to 28', await sum('fuel'), 28);
-  check('body counts ignore their own selection (still 138)', await sum('body'), 138);
+  /* cars whose listing names no fuel are left out of the fuel facet, not guessed */
+  check('fuel counts are cross-filtered to the SUVs', await sum('fuel'), count(c => c.body === 'SUV / 4x4' && c.fuel));
+  check(`body counts ignore their own selection (still ${N})`, await sum('body'), N);
 
   /* --- combined filters --- */
   await go('?body=SUV+%2F+4x4&fuel=Hybrid&pmin=20000&pmax=30000');
   s = await snap();
+  const combo = count(c => c.body === 'SUV / 4x4' && c.fuel === 'Hybrid' && c.price !== null && c.price >= 20000 && c.price <= 30000);
   check('combined filters', [s.count, s.chips],
-    ['5 cars match of 138 in stock', ['SUV / 4x4', 'Hybrid', '$20,000 – $30,000']]);
+    [countCopy(combo), ['SUV / 4x4', 'Hybrid', '$20,000 – $30,000']]);
   const inRange = await page.evaluate(() =>
     [...document.querySelectorAll('#grid .car .p')].every(p => {
       const n = Number(p.textContent.replace(/[^\d]/g, ''));
@@ -73,43 +82,50 @@ export default async function listing({ browser, base, check }) {
   /* --- sorts --- */
   await go('?sort=price-asc');
   s = await snap();
-  check('price ascending: cheapest first', [s.firstPrice, s.url], ['$4,980*', '?sort=price-asc']);
+  check('price ascending: cheapest first', [s.firstPrice, s.url], [EXTREMES.cheapest, '?sort=price-asc']);
   await go('?sort=price-desc');
-  check('price descending: dearest first', (await snap()).firstPrice, '$36,890*');
+  check('price descending: dearest first', (await snap()).firstPrice, EXTREMES.dearest);
   await go('?sort=year-desc');
-  check('year newest first', (await snap()).firstYear, '2023');
+  check('year newest first', (await snap()).firstYear, EXTREMES.newest);
   await go('?sort=year-asc');
-  check('year oldest first', (await snap()).firstYear, '2002');
+  check('year oldest first', (await snap()).firstYear, EXTREMES.oldest);
   await go('?sort=km-asc');
-  check('kms lowest first', (await snap()).firstKm, '7,283km');
+  check('kms lowest first', (await snap()).firstKm, EXTREMES.lowestKm);
   await go('?sort=km-desc');
-  check('kms highest first', (await snap()).firstKm, '196,449km');
+  check('kms highest first', (await snap()).firstKm, EXTREMES.highestKm);
 
   await go('?sort=price-asc');
+  const A = EXTREMES.unpriced;
   const tail = await page.evaluate(async () => {
-    for (let i = 0; i < 6; i++) { document.getElementById('more').click(); await new Promise(r => setTimeout(r, 60)); }
-    const all = [...document.querySelectorAll('#grid .car .p')].map(p => p.textContent.trim());
-    return { total: all.length, last12: all.slice(-12) };
+    const more = document.getElementById('more');
+    while (getComputedStyle(more).display !== 'none') { more.click(); await new Promise(r => setTimeout(r, 60)); }
+    return [...document.querySelectorAll('#grid .car .p')].map(p => p.textContent.trim());
   });
-  check('price sort: the 12 "Ask us" cars land last',
-    [tail.total, new Set(tail.last12).size, tail.last12[0]], [138, 1, 'Ask us']);
+  /* exactly the unpriced ones, and nothing priced among them */
+  check(`price sort: all ${A} "Ask us" cars land last`,
+    [tail.length, [...new Set(tail.slice(-A))], tail[tail.length - A - 1] !== 'Ask us'], [N, ['Ask us'], true]);
 
   /* --- values arriving from the homepage search --- */
   await go('?body=Station%20Wagon&make=toyota');
   check('legacy "Station Wagon" + lowercase make are mapped', (await snap()).chips, ['Station wagon', 'Toyota']);
   await go('?body=SUV');
-  check('legacy "SUV" maps to SUV / 4x4', (await snap()).count, '28 cars match of 138 in stock, showing 24');
+  check('legacy "SUV" maps to SUV / 4x4', (await snap()).count, countCopy(SUV));
   await go('?body=RV-SUV');
-  check('legacy "RV-SUV" maps to SUV / 4x4', (await snap()).count, '28 cars match of 138 in stock, showing 24');
+  check('legacy "RV-SUV" maps to SUV / 4x4', (await snap()).count, countCopy(SUV));
 
-  /* --- empty state --- */
+  /* --- the homepage's Ute tile lands on a real result, or an honest empty state --- */
+  const UTES = count(c => c.body === 'Ute');
   await go('?body=Ute');
+  check(`Ute tile: ${UTES} in stock`, (await snap()).count, countCopy(UTES));
+
+  /* --- empty state: a filter nothing can satisfy, whatever is in stock --- */
+  await go('?ymin=2099');
   s = await snap();
-  check('no utes in stock -> empty state', [s.count, s.empty, s.cards], ['No cars match', true, 0]);
+  check('impossible filter -> empty state', [s.count, s.empty, s.cards], ['No cars match', true, 0]);
   check('empty state hides the show-more button', s.more, false);
   await page.click('.empty [data-clear]'); await settle(250);
   s = await snap();
-  check('clear all from the empty state', [s.count, s.url, s.chips], ['138 cars in stock showing 24', '', []]);
+  check('clear all from the empty state', [s.count, s.url, s.chips], [countCopy(N), '', []]);
 
   /* --- chips --- */
   await go('?body=Sedan&make=Toyota&fuel=Hybrid');
@@ -122,7 +138,7 @@ export default async function listing({ browser, base, check }) {
   const years = await page.evaluate(() => [...document.querySelectorAll('#grid .car .y')].map(y => +y.textContent));
   check('year range respected', [years.every(y => y >= 2020 && y <= 2023), (await snap()).chips], [true, ['2020 – 2023']]);
   await go('?trans=Automatic');
-  check('transmission filter works', (await snap()).count, '138 cars in stock showing 24');
+  check('transmission filter works', (await snap()).count, countCopy(count(c => c.transmission === 'Automatic')));
 
   /* --- mobile bottom sheet --- */
   await page.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
@@ -150,8 +166,9 @@ export default async function listing({ browser, base, check }) {
   check('mobile: scrim up, scroll locked, focus moved into the sheet',
     [sheet.scrim, sheet.locked, sheet.focused], ['1', 'hidden', 'sheet-close']);
 
-  const closed = await page.evaluate(async () => {
-    document.querySelector('input[data-facet="fuel"][value="Electric"]').click();
+  const { fuel, n: F } = RARE_FUEL;
+  const closed = await page.evaluate(async fuel => {
+    document.querySelector(`input[data-facet="fuel"][value="${fuel}"]`).click();
     await new Promise(r => setTimeout(r, 300));
     const applyLabel = document.getElementById('sheet-apply').textContent;
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -165,11 +182,11 @@ export default async function listing({ browser, base, check }) {
       cards: document.querySelectorAll('#grid .car').length,
       url: location.search,
     };
-  });
-  check('mobile: apply button counts the matches', closed.applyLabel, 'Show 2 cars');
+  }, fuel);
+  check('mobile: apply button counts the matches', closed.applyLabel, `Show ${F} ${noun(F)}`);
   check('mobile: Escape closes and unlocks scroll', [closed.visibility, closed.locked], ['hidden', '']);
   check('mobile: bar count + badge track the filter',
-    [closed.barCount, closed.badge, closed.cards, closed.url], ['2 cars', '1', 2, '?fuel=Electric']);
+    [closed.barCount, closed.badge, closed.cards, closed.url], [`${F} ${noun(F)}`, '1', showing(F), `?fuel=${fuel}`]);
 
   const lockedOnOpen = await page.evaluate(() => { document.getElementById('sheet-open').click(); return document.body.style.overflow; });
   await page.setViewport({ width: 1440, height: 900 });

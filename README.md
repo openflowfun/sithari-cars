@@ -12,7 +12,7 @@ Vite multi-page site. `npm install`, then `npm run dev` (dev server) or `npm run
 - `src/vehicles.html` — vehicle listing, filters + sort in the URL query string
 - `src/styles/` — `tokens.css`, `base.css`, `components.css` shared; `home.css`, `vehicles.css` per page
 - `src/scripts/` — `motion.js`, `cards.js`, `nav.js` shared; `home.js`, `vehicles.js` per page
-- `src/data/inventory.json` — 138 live vehicles scraped 1 Sept 2026 (`python3 scripts/scrape_inventory.py` to refresh)
+- `src/data/inventory.json` — 263 vehicles scraped 5 Oct 2026. Refresh procedure is in CLAUDE.md
 - `src/assets/logo/` — original logo + white-wordmark variant for dark surfaces
 
 ## Deploying

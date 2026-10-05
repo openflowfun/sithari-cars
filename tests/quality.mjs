@@ -3,6 +3,7 @@
    semantic + labelled, and never drifts off the palette or type scale. */
 
 import { settle } from './helpers.mjs';
+import { count } from './data.mjs';
 
 const WIDTHS = [360, 390, 768, 1024, 1440];
 const PAGES = ['/index.html', '/vehicles.html', '/finance.html', '/contact.html', '/out-of-town.html'];
@@ -70,7 +71,7 @@ export default async function quality({ browser, base, check }) {
       };
     });
     check('no CDN: gsap absent but content visible', [out.gsap, out.opacity], ['undefined', '1']);
-    check('no CDN: filtering still works', [out.before, out.after], [24, 1]);
+    check('no CDN: filtering still works', [out.before, out.after], [24, Math.min(24, count(c => c.fuel === 'Diesel'))]);
     check('no CDN: nav still goes light past the band', out.nav, 'nav is-light');
     await p.close();
   }

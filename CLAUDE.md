@@ -10,12 +10,21 @@ Old site: https://www.sitharicars.co.nz (Motorcentral platform). Inventory curre
 - Vite multi-page build. `npm run dev` / `npm run build`. Pages are plain `.html` files in `src/`, one Rollup input each in `vite.config.js`.
 - Shared CSS in `src/styles/` (tokens → base → components), shared JS in `src/scripts/` (`motion.js`, `cards.js`, `nav.js`). Page-only CSS/JS sits alongside as `home.*` / `vehicles.*`.
 - `src/index.html` — homepage v1, done and reviewed. Refactored onto the shared files; renders byte-identically to the original single-file version. Treat it as the reference for every other page.
-- `src/vehicles.html` — listing page, built, **awaiting review**. Filters, sort, live count, URL params, mobile bottom sheet.
-- Next: vehicle detail (`/vehicle/:id`), finance, out-of-town, contact.
-- `npm test` drives both pages in headless Chrome and enforces the rules below (palette, type, radii, 360px, reduced motion, CDN-less fallback, a11y). Add new pages to `PAGES` in `tests/quality.mjs`.
+- Built and reviewed: `vehicles.html` (filters, sort, URL state, mobile sheet), `finance.html`, `contact.html`, `out-of-town.html`.
+- Next: vehicle detail (`/vehicle/:id`) — every car card still links to the old Motorcentral site.
+- `npm test` drives all five pages in headless Chrome and enforces the rules below (palette, type, radii, 360px, reduced motion, CDN-less fallback, a11y). Add new pages to `PAGES` in `tests/quality.mjs`.
 - Homepage carries a 1m14 Sinhala explainer video in the `.why` sticky column. The 129 MB master lives in `src/public/video/` and is gitignored; only the 720p web encode ships. Re-encode with:
   `ffmpeg -i <master> -vf scale=1280:-2 -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart sithari-explainer.mp4`
 - **Outstanding: English subtitles for that video** (WCAG 1.2.2 Level A). The `<track>` element is scaffolded and commented out in `src/index.html` — drop a `sithari-explainer.en.vtt` beside the mp4 and uncomment it. Needs a translation of the Sinhala narration.
+- **Inventory: 263 cars, scraped 5 Oct 2026.** Stock turns over fast — between 1 Sept and 5 Oct, 49% of the cars shown had sold. Refresh is manual for now:
+  ```
+  python3 scripts/scrape_inventory.py   # refuses to write if the count collapses (a markup change matches nothing)
+  node scripts/pick_featured.mjs        # re-picks the hero strip (freshest arrivals, 2012+) and featured grid
+  node scripts/body_report.mjs          # eyeball the classifier: new models fall through to "Hatchback"
+  npm test                              # expectations are computed from inventory.json, so they survive refreshes
+  ```
+  "%STOCK_COUNT%" in any page is replaced with the live count at build (`vite.config.js`), so counts can't drift.
+- Motorcentral omits fuel for some cars and puts the engine size ("1500cc") in that slot. `fuelOf()` in `cards.js` never lets that through; it infers Hybrid only where the title says so or the model is hybrid-only (Aqua, Prius). Unknown stays unknown.
 - Body style is derived from the model name in `cards.js` (`BODY_RULES`) because the scrape has no such field. Delete it once the inventory comes from a Motorcentral feed.
 
 ## Design system (do not drift from this)

@@ -13,11 +13,14 @@ export const money = n => '$' + Number(n).toLocaleString('en-NZ');
    the liftback, not a Corolla Touring wagon. Replace this with the real field as
    soon as the inventory comes from a Motorcentral feed. */
 const BODY_RULES = [
-  ['People mover',  /PRIUS ALPHA|ELGRAND|SERENA|VELLFIRE|ALPHARD|NOAH|VOXY|ESTIMA|ODYSSEY|STEPWGN/],
-  ['Van',           /CARAVAN|NV200|VANETTE|PROBOX|HIACE|TOWNACE/],
-  ['Station wagon', /FIELDER|COROLLA TOURING|WAGON|WINGROAD|SHUTTLE|AVENSIS|LEVORG/],
-  ['SUV / 4x4',     /RAV4|C-HR|VEZEL|CX-5|X-TRAIL|\bXV\b|JUKE|KICKS|TUCSON|IX35|RVR|TRAX|\bQ7\b|\bX4\b|HARRIER|FORESTER|OUTLANDER|CR-V/],
-  ['Sedan',         /\bSEDAN\b|AXIO|ALLION|ALTEZZA|CELSIOR|SKYLINE|CAMRY|ATENZA|E200|HS250H|\bWRX\b|PREMIO|MARK X|CROWN|LEGACY B4/],
+  ['People mover',  /PRIUS ALPHA|ELGRAND|SERENA|VELLFIRE|ALPHARD|NOAH|VOXY|ESTIMA|ODYSSEY|STEPWGN|SIENTA|\bWISH\b|PREMACY|\bJADE\b/],
+  ['Van',           /CARAVAN|NV200|VANETTE|PROBOX|HIACE|TOWNACE|REGIUS|BONGO|\bVAN\b/],
+  ['Station wagon', /FIELDER|COROLLA TOURING|WAGON|WINGROAD|SHUTTLE|AVENSIS|LEVORG|\bAVANT\b/],
+  /* HILUX SURF is Toyota's SUV, so it is caught here before the Ute rule sees HILUX */
+  ['SUV / 4x4',     /RAV4|C-HR|VEZEL|CX-[3-9]|X-TRAIL|\bXV\b|JUKE|KICKS|TUCSON|IX35|RVR|TRAX|\bQ[3578]\b|\bX[1-7]\b|HARRIER|FORESTER|OUTLANDER|CR-V|ESCAPE|SPORTAGE|DUALIS|MACAN|CAYENNE|HILUX SURF/],
+  ['Ute',           /HILUX|NAVARA|\bRANGER\b|TRITON|D-MAX|BT-50|AMAROK|COLORADO/],
+  ['Coupe',         /COUPE|\bRC ?\d{3}/],
+  ['Sedan',         /\bSEDAN\b|AXIO|ALLION|ALTEZZA|CELSIOR|SKYLINE|CAMRY|ATENZA|E200|HS250H|\bWRX\b|PREMIO|MARK[- ]X|CROWN|LEGACY B4|\bSAI\b/],
 ];
 
 export function bodyStyle(title) {
@@ -27,6 +30,20 @@ export function bodyStyle(title) {
 }
 
 const num = s => (s ? Number(String(s).replace(/[^\d]/g, '')) : null);
+
+/* Motorcentral omits the fuel field for some cars, and the third spec slot then
+   holds the engine size ("1500cc") — which must never surface as a fuel type.
+   Where the listing's own title says hybrid, or the model has only ever been
+   sold as a hybrid, that is extraction rather than guesswork. */
+const FUELS = ['Hybrid', 'Petrol', 'Diesel', 'Electric'];
+const HYBRID_ONLY = /\b(AQUA|PRIUS)\b/i;
+const SAYS_HYBRID = /\b(HYBRID|HV|E-POWER)\b/i;
+function fuelOf(given, slot, title) {
+  if (FUELS.includes(given)) return given;
+  if (FUELS.includes(slot)) return slot;
+  if (SAYS_HYBRID.test(title) || HYBRID_ONLY.test(title)) return 'Hybrid';
+  return '';
+}
 
 export function normalise(v) {
   const title = v.title || [v.year, v.make, v.model].filter(Boolean).join(' ');
@@ -45,14 +62,24 @@ export function normalise(v) {
     price: num(v.price),
     km: num(kmLabel),
     kmLabel,
-    fuel: v.fuel || (spec ? spec[3] : ''),
-    transmission: spec ? spec[2] : '',
+    fuel: fuelOf(v.fuel, spec ? spec[3] : '', title),
+    transmission: spec ? (/tiptronic/i.test(spec[2]) ? 'Automatic' : spec[2]) : '',
     body: bodyStyle(title),
     tags: v.tags || [],
     img: v.img || '',
     url: (v.url || '').startsWith('http') ? v.url : OLD_SITE + v.url,
   };
 }
+
+/* The homepage "In the yard" chips. scripts/pick_featured.mjs uses these same
+   tests when choosing the featured cars, so no chip can come up empty. */
+export const CHIPS = {
+  all: () => true,
+  hybrid: c => c.fuel === 'Hybrid' || c.fuel === 'Electric',
+  suv: c => c.body === 'SUV / 4x4' || c.tags.includes('4WD'),
+  family: c => c.body === 'People mover' || c.tags.some(t => /seater/i.test(t)),
+  under15: c => c.price !== null && c.price < 15000,
+};
 
 /* Prices show as $26,990* with the on-road-costs footnote; no price means "Ask us". */
 const priceHTML = c => (c.price ? money(c.price) + '<sup>*</sup>' : 'Ask us');
