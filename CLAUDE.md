@@ -23,7 +23,7 @@ Old site: https://www.sitharicars.co.nz (Motorcentral platform). Inventory curre
   ```
   The navy tint in `home.css` carries the contrast; `tests/quality.mjs` §7 measures every hero text block against the brightest photo pixel behind it at 920–1920px, and checks phones never fetch the image. It is a still, not a motion effect. **Outstanding: ask the client for a clean frame from the raw drone footage** (no badges) and re-run the encode — no CSS change needed.
 - **Outstanding: English subtitles for that video** (WCAG 1.2.2 Level A). The `<track>` element is scaffolded and commented out in `src/index.html` — drop a `sithari-explainer.en.vtt` beside the mp4 and uncomment it. Needs a translation of the Sinhala narration.
-- **Inventory: 263 cars, scraped 5 Oct 2026.** Stock turns over fast — between 1 Sept and 5 Oct, 49% of the cars shown had sold. Refresh is manual for now:
+- **Inventory: 306 cars, scraped 8 Oct 2026.** Stock turns over fast — between 1 Sept and 5 Oct, 49% of the cars shown had sold. Refresh is manual for now:
   ```
   python3 scripts/scrape_inventory.py   # refuses to write if the count collapses (a markup change matches nothing)
   node scripts/pick_featured.mjs        # re-picks the hero strip (freshest arrivals, 2012+) and featured grid

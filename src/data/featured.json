@@ -8,7 +8,7 @@
   "km": "68,460km",
   "specs": "68,460km, Automatic, Hybrid, 1200cc",
   "fuel": "Hybrid",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-f930a10a-7970-402f-b7f9-1581ebb18949-1-1.jpg?r=639266917324216680",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-f930a10a-7970-402f-b7f9-1581ebb18949-1-1.jpg?r=639270299521514228",
   "tags": [
    "Hybrid",
    "Bluetooth Audio",
@@ -26,7 +26,7 @@
   "km": "84,845km",
   "specs": "84,845km, Automatic, Hybrid, 1500cc",
   "fuel": "Hybrid",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-6ce9cfef-de9b-4be5-ae90-119594466aff-1-1.jpg?r=639266917323279166",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-6ce9cfef-de9b-4be5-ae90-119594466aff-1-1.jpg?r=639270299522295491",
   "tags": [
    "Hybrid",
    "ESC",
@@ -44,7 +44,7 @@
   "km": "63,324km",
   "specs": "63,324km, Automatic, Hybrid, 1800cc",
   "fuel": "Hybrid",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-ecc3c569-8339-4143-b7e6-3f73631a21aa-1-1.jpg?r=639266917324372895",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-ecc3c569-8339-4143-b7e6-3f73631a21aa-1-1.jpg?r=639270299521983041",
   "tags": [
    "Hybrid",
    "ESC",
@@ -62,7 +62,7 @@
   "km": "63,711km",
   "specs": "63,711km, Automatic, Hybrid, 1200cc",
   "fuel": "Hybrid",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-5ab88ba5-973b-4dc4-b57b-411a8ff26f5c-1-1.jpg?r=639266917322341619",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-5ab88ba5-973b-4dc4-b57b-411a8ff26f5c-1-1.jpg?r=639270299522764261",
   "tags": [
    "Hybrid",
    "Bluetooth Audio",
@@ -70,6 +70,24 @@
    "Parking Sensors"
   ],
   "url": "https://www.sitharicars.co.nz/vehicle/2021-Nissan-Kicks/8982"
+ },
+ {
+  "id": "9183",
+  "year": "2021",
+  "make": "Toyota",
+  "model": "Yaris Hybrid X Push start",
+  "price": "14980",
+  "km": "89,039km",
+  "specs": "89,039km, Automatic, 1500cc",
+  "fuel": "",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-b7da0af9-e452-47ea-967f-4ef847084b7e-1-1.jpg?r=639270299521826782",
+  "tags": [
+   "Petrol",
+   "ESC",
+   "Cruise Control",
+   "ABS Brakes"
+  ],
+  "url": "https://www.sitharicars.co.nz/vehicle/2021-Toyota-Yaris/9183"
  },
  {
   "id": "8913",
@@ -80,7 +98,7 @@
   "km": "99,489km",
   "specs": "99,489km, Automatic, Petrol, 1600cc",
   "fuel": "Petrol",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-ee958999-fc0e-4b82-b7e0-bef6e4d8680d-1-1.jpg?r=639266917324529195",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-ee958999-fc0e-4b82-b7e0-bef6e4d8680d-1-1.jpg?r=639270299522139283",
   "tags": [
    "Petrol",
    "ABS Brakes",
@@ -88,24 +106,6 @@
    "Traction Control"
   ],
   "url": "https://www.sitharicars.co.nz/vehicle/2021-Nissan-NV200/8913"
- },
- {
-  "id": "9017",
-  "year": "2021",
-  "make": "Toyota",
-  "model": "Yaris HYBRID X PUSH START",
-  "price": "13698",
-  "km": "104,959km",
-  "specs": "104,959km, Automatic, Hybrid, 1500cc",
-  "fuel": "Hybrid",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-591d7d14-8a7a-42a8-bcb8-9820111e46f4-1-1.jpg?r=639266917324216680",
-  "tags": [
-   "Hybrid",
-   "Apple CarPlay",
-   "Android Auto",
-   "Bluetooth Audio"
-  ],
-  "url": "https://www.sitharicars.co.nz/vehicle/2021-Toyota-Yaris/9017"
  },
  {
   "id": "8915",
@@ -116,7 +116,7 @@
   "km": "62,528km",
   "specs": "62,528km, Automatic, Hybrid, 2500cc",
   "fuel": "Hybrid",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-d88887e0-6ed8-45ce-b566-187a5f93ecb7-1-1.jpg?r=639266917322497866",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-d88887e0-6ed8-45ce-b566-187a5f93ecb7-1-1.jpg?r=639270299521826782",
   "tags": [
    "Hybrid",
    "ISOFIX",
@@ -126,22 +126,40 @@
   "url": "https://www.sitharicars.co.nz/vehicle/2020-Toyota-Harrier/8915"
  },
  {
-  "id": "9055",
+  "id": "9161",
   "year": "2020",
-  "make": "Toyota",
-  "model": "C-HR HYBRID G",
-  "price": "24890",
-  "km": "86,916km",
-  "specs": "86,916km, Automatic, Hybrid, 1800cc",
-  "fuel": "Hybrid",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-c3925cff-2c47-4168-8b87-cc4ea6b12fe2-1-1.jpg?r=639266917322341619",
+  "make": "Mazda",
+  "model": "CX-30 20S",
+  "price": "22870",
+  "km": "80,792km",
+  "specs": "80,792km, Automatic, 2000cc",
+  "fuel": "",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-fea848fc-8da8-42e5-9672-9c82b1448878-1-1.jpg?r=639270299521826782",
   "tags": [
-   "Hybrid",
-   "Apple CarPlay",
-   "Android Auto",
-   "Bluetooth Audio"
+   "Petrol",
+   "ESC",
+   "Cruise Control",
+   "ABS Brakes"
   ],
-  "url": "https://www.sitharicars.co.nz/vehicle/2020-Toyota-C-HR/9055"
+  "url": "https://www.sitharicars.co.nz/vehicle/2020-Mazda-CX-30/9161"
+ },
+ {
+  "id": "9143",
+  "year": "2018",
+  "make": "Mazda",
+  "model": "CX-3 20S PROACTIVE S PACKAGE",
+  "price": "22980",
+  "km": "10,087km",
+  "specs": "10,087km, Automatic, 2000cc",
+  "fuel": "",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-08ac8dbd-d50c-4211-b6cf-055c75fcddca-1-1.jpg?r=639270299521201782",
+  "tags": [
+   "Low kms",
+   "Petrol",
+   "ESC",
+   "Cruise Control"
+  ],
+  "url": "https://www.sitharicars.co.nz/vehicle/2018-Mazda-CX-3/9143"
  },
  {
   "id": "8825",
@@ -152,7 +170,7 @@
   "km": "57,889km",
   "specs": "57,889km, Automatic, Petrol, 2000cc",
   "fuel": "Petrol",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-c6c2b230-3584-4552-9ae9-44ef9bb4c6d0-1-1.jpg?r=639266917323435402",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-c6c2b230-3584-4552-9ae9-44ef9bb4c6d0-1-1.jpg?r=639270299522295491",
   "tags": [
    "Petrol",
    "4WD",
@@ -162,22 +180,40 @@
   "url": "https://www.sitharicars.co.nz/vehicle/2018-BMW-X4/8825"
  },
  {
-  "id": "9236",
+  "id": "9171",
   "year": "2018",
-  "make": "Ford",
-  "model": "Escape TITANIUM AWD PETROL SUNROOF",
-  "price": "17980",
-  "km": "69,885km",
-  "specs": "69,885km, Automatic, Petrol, 1999cc",
-  "fuel": "Petrol",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-4255547c-c783-4c51-b69c-965eb61f8667-1-1.jpg?r=639266917323122887",
+  "make": "Toyota",
+  "model": "Sienta HYBRID G CUERO",
+  "price": "15980",
+  "km": "98,995km",
+  "specs": "98,995km, Automatic, Hybrid, 1500cc",
+  "fuel": "Hybrid",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-28434078-2593-42c7-a109-2c3240e0769b-1-1.jpg?r=639270299522295491",
   "tags": [
-   "Petrol",
-   "4WD",
-   "Bluetooth Audio",
-   "Sunroof"
+   "7 seater",
+   "Hybrid",
+   "ESC",
+   "ABS Brakes"
   ],
-  "url": "https://www.sitharicars.co.nz/vehicle/2018-Ford-Escape/9236"
+  "url": "https://www.sitharicars.co.nz/vehicle/2018-Toyota-Sienta/9171"
+ },
+ {
+  "id": "9170",
+  "year": "2018",
+  "make": "Mazda",
+  "model": "Premacy 20C SKYACTIVE",
+  "price": "10970",
+  "km": "113,000km",
+  "specs": "113,000km, Automatic, 2000cc",
+  "fuel": "",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-65dbdb94-6755-4f38-acde-7f6b9a84f8a8-1-1.jpg?r=639270299522139283",
+  "tags": [
+   "7 seater",
+   "Petrol",
+   "ESC",
+   "ABS Brakes"
+  ],
+  "url": "https://www.sitharicars.co.nz/vehicle/2018-Mazda-Premacy/9170"
  },
  {
   "id": "9238",
@@ -188,7 +224,7 @@
   "km": "123,253km",
   "specs": "123,253km, Automatic, Petrol, 1364cc",
   "fuel": "Petrol",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-a3435067-513b-49a5-915d-073b7b3dbcc3-1-1.jpg?r=639266917323435402",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-a3435067-513b-49a5-915d-073b7b3dbcc3-1-1.jpg?r=639270299521514228",
   "tags": [
    "Petrol",
    "Bluetooth Audio",
@@ -206,7 +242,7 @@
   "km": "17,115km",
   "specs": "17,115km, Automatic, Petrol, 1300cc",
   "fuel": "Petrol",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-6cf7a931-65c1-4412-99a8-58289007edb2-1-1.jpg?r=639266917322497866",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-6cf7a931-65c1-4412-99a8-58289007edb2-1-1.jpg?r=639270299522764261",
   "tags": [
    "Low kms",
    "Petrol",
@@ -224,7 +260,7 @@
   "km": "70,233km",
   "specs": "70,233km, Automatic, Petrol, 2000cc",
   "fuel": "Petrol",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-95f786e1-1241-4a1b-9af1-5ed66a0f5784-1-1.jpg?r=639266917324841735",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-95f786e1-1241-4a1b-9af1-5ed66a0f5784-1-1.jpg?r=639270299521357979",
   "tags": [
    "7 seater",
    "Petrol",
@@ -242,7 +278,7 @@
   "km": "90,502km",
   "specs": "90,502km, Automatic, Petrol, 2000cc",
   "fuel": "Petrol",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-b539af6d-e6fe-4b3b-a502-cd2e13c97136-1-1.jpg?r=639266917323122887",
+  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-b539af6d-e6fe-4b3b-a502-cd2e13c97136-1-1.jpg?r=639270299521983041",
   "tags": [
    "7 seater",
    "Petrol",
@@ -250,41 +286,5 @@
    "Bluetooth Audio"
   ],
   "url": "https://www.sitharicars.co.nz/vehicle/2015-Nissan-X-trail/9118"
- },
- {
-  "id": "9054",
-  "year": "2015",
-  "make": "Honda",
-  "model": "Odyssey ABSOLUTE ADVANCE 8SEATER",
-  "price": "13879",
-  "km": "125,239km",
-  "specs": "125,239km, Automatic, Petrol, 2400cc",
-  "fuel": "Petrol",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-8b3d283e-2de1-4d54-9b4c-cac2dfa26007-1-1.jpg?r=639266917324685445",
-  "tags": [
-   "8 seater",
-   "Petrol",
-   "Bluetooth Audio",
-   "ISOFIX"
-  ],
-  "url": "https://www.sitharicars.co.nz/vehicle/2015-Honda-Odyssey/9054"
- },
- {
-  "id": "9057",
-  "year": "2014",
-  "make": "Toyota",
-  "model": "Noah HYBRID G",
-  "price": "14890",
-  "km": "115,421km",
-  "specs": "115,421km, Automatic, Hybrid, 1800cc",
-  "fuel": "Hybrid",
-  "img": "https://www.sitharicars.co.nz/Motorcentral/VehicleData/SIT-cfb9f87b-1d30-4067-9307-eed721014762-1-1.jpg?r=639266917323435402",
-  "tags": [
-   "7 seater",
-   "Hybrid",
-   "Cruise Control",
-   "ABS Brakes"
-  ],
-  "url": "https://www.sitharicars.co.nz/vehicle/2014-Toyota-Noah/9057"
  }
 ]
